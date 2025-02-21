@@ -28,6 +28,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Ensure package.json is using ES Modules
+        run: |
+          jq '. + { "type": "module" }' package.json > package.json.tmp && mv package.json.tmp package.json
+        shell: bash
+
       - name: Install dependencies
         run: npm install --force
 
